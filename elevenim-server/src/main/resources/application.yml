@@ -1,0 +1,15 @@
+# 服务端口从7001开始
+server:
+  port: 7001
+spring:
+  application:
+    name: elevenim-server
+
+zookeeper:
+  address: 127.0.0.1:2181
+  timeout: 4000
+
+# Socket端口从8001开始
+app:
+  ip: 127.0.0.1
+  port: 8001

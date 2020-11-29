@@ -1,6 +1,7 @@
 package cn.izzer.elevenimserver.controller;
 
 import cn.izzer.elevenimserver.util.ZKUtil;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.Watcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class IndexController {
     @GetMapping("/create/{path}/{data}")
     public String createNode(@PathVariable("path")String path,@PathVariable("data")String data){
         path = "/"+path;
-        zkUtil.createNode(path,data);
+        zkUtil.createNode(path,data,CreateMode.EPHEMERAL);
         return "Create success";
     }
 

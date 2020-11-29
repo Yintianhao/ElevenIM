@@ -3,6 +3,8 @@ package cn.izzer.elevenimserver.register;
 import cn.izzer.elevenimserver.config.AppConfig;
 import cn.izzer.elevenimserver.util.SpringBeanFactory;
 import cn.izzer.elevenimserver.util.ZKUtil;
+import common.Const;
+import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,8 +29,12 @@ public class ZKRegistry implements Runnable {
 
     @Override
     public void run() {
-        String path = String.format("/%s",appConfig.getAppName());
+        String parentNodePath = String.format("/%s",Const.ZNODE_SERVER_NAME);
+        String path = String.format("/%s/%s", Const.ZNODE_SERVER_NAME,appConfig.getAppName());
         String data = String.format("%s:%s",appConfig.getAppIp(),appConfig.getSocketPort());
-        zkUtil.createNode(path,data);
+        if(zkUtil.exist(parentNodePath,false)==null){
+            zkUtil.createNode(parentNodePath,"",CreateMode.PERSISTENT);
+        }
+        zkUtil.createNode(path,data,CreateMode.EPHEMERAL);
     }
 }

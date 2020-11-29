@@ -1,11 +1,13 @@
 package cn.izzer.elevenimroute.util;
 
+import common.Const;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,6 +107,23 @@ public class ZKUtil {
     public List<String> getChildren(String path) throws KeeperException, InterruptedException{
         List<String> list = zkClient.getChildren(path, false);
         return list;
+    }
+
+    /**
+     * 获取某节点下所有子节点的值
+     * @param path 节点的路径 /xx/xx的形式
+     * */
+    public List<String> getAllChildrenData(String path) throws KeeperException,InterruptedException{
+
+        List<String> nodeNames = zkClient.getChildren(path,false);
+        List<String> nodeValues = new ArrayList<>();
+        String parentPath = String.format("/%s", Const.ZNODE_SERVER_NAME);
+        for (String name : nodeNames){
+            String p = String.format("%s/%s",parentPath,name);
+            String v = getData(p,false);
+            nodeValues.add(v);
+        }
+        return nodeValues;
     }
 
     /**

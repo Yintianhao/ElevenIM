@@ -55,10 +55,10 @@ public class ZKUtil {
      * @param path
      * @param data
      */
-    public boolean createNode(String path, String data){
+    public boolean createNode(String path, String data,CreateMode mode){
         try {
             //创建节点，不设置持久化
-            zkClient.create(path,data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.EPHEMERAL);
+            zkClient.create(path,data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,mode);
             return true;
         } catch (Exception e) {
             log.error("Zookeeper 创建持久化节点异常{},{},{}",path,data,e);

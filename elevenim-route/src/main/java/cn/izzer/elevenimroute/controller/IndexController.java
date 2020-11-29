@@ -1,9 +1,11 @@
 package cn.izzer.elevenimroute.controller;
 
-import cn.izzer.elevenimroute.util.ZKUtil;
+import cn.izzer.elevenimroute.service.IMServerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * @author yintianhao
@@ -11,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @description
  */
 @RestController
+@Slf4j
 public class IndexController  {
 
 
     @Autowired
-    private ZKUtil zkUtil;
+    private IMServerService imServerService;
 
     @GetMapping("/getAll")
-    public String getAllZKInfo(){
-        //测试，获取全部的Zookeeper注册信息
-        
+    public String getAllZKInfo() throws Exception{
+        String server = imServerService.chooseValidServer();
+        log.info(String.format("Client choose a server:%s",server));
+        return server;
     }
 }

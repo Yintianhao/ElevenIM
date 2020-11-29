@@ -1,0 +1,15 @@
+# 应用名称
+#spring.application.name=elevenim-route
+# 应用服务 WEB 访问端口
+#server.port=8080
+spring:
+  application:
+    name: elevenim-route
+zookeeper:
+  address: 127.0.0.1:2181
+  timeout: 4000
+app:
+  ip: 127.0.0.1
+  port: 6001
+server:
+  port: 6001
